@@ -1,6 +1,8 @@
-# ARMS
-Automatic Roll Marking System
+# ARMS project
+An Auomatic Roll Marking System that scans and decodes student IDs in real time. 
 
-Team members: Somto
+Finished program found under ARMS.py.
 
-Some extra words because why not.
+Team members: Somto and Liam
+
+Pi model used is Raspberry pi 3b+ with the Raspberry pi v1 camera module.
