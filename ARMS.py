@@ -3,7 +3,7 @@
 #but the project can be improved and extended to practical systems
 
 #Libraries needed
-from imutils.video import VideoStream    #capture threaded video streams                                                                                        .
+from imutils.video import VideoStream    #capture threaded video streams
 from time import sleep                   #time delays
 import RPi.GPIO as GPIO                  #to access the Pi board
 import pyzbar.pyzbar as pyzbar           #decoding library
@@ -23,10 +23,10 @@ def beep():
     sleep(1)                             #delay
                                          #hence creating a beep effect
     GPIO.cleanup()                       #reset pin
-                                                                                                                                                                                                                                          
+
 def scanCode():
     #initialize the video stream and allow the camera sensor to warm up
-    print("[INFO] starting video stream...") 
+    print("[INFO] starting video stream...")
     vs = VideoStream(usePiCamera=True).start()
     sleep(2)
 
@@ -34,7 +34,7 @@ def scanCode():
     csv = open("barcodes.csv", "w+")          #clear previous content in csv file
     csv.close()
     csv = open("barcodes.csv", "a")           #open csv for new content
-    csv.write("ID,Time\n")                   
+    csv.write("ID,Time\n")
     found = []
 
     #loop over the frames from the video stream
@@ -65,7 +65,7 @@ def scanCode():
 
             #if the barcode text is currently not in our csv file, write
             #the timestamp and barcode to file and update list
-            #and call beep() 
+            #and call beep()
             if barcodeData not in found:
                 csv.write("{},{}\n".format(barcodeData, datetime.datetime.now()))
                 beep()
@@ -74,7 +74,7 @@ def scanCode():
 
         #extension of content check however
         #this permits multiple scans after 10 seconds
-        #and deletes duplicates        
+        #and deletes duplicates
         for i in range(0, len(found)):
             if i % 2 == 1:
                 found[i] = found[i] - 1
@@ -97,6 +97,6 @@ def scanCode():
     vs.stop()
 
 if __name__ == '__main__':
-    #uncomment line 101 if timezone incorrect
-    #os.system('sudo date -s "$(wget -qSO- -max-redirect=0 google.com 2>&1 | grep Date: | cut -d\'\'-f5-8)Z"') 
-    scanCode()                                                                                                  
+    #Gets the correct time and sets the Pi to use that time, due to issues with the school network
+    os.system('sudo date -s "$(wget -qSO- -max-redirect=0 google.com 2>&1 | grep Date: | cut -d\'\'-f5-8)Z"') 
+    scanCode()
